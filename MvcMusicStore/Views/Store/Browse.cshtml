@@ -1,0 +1,22 @@
+﻿@model MvcMusicStore.Models.Genre
+
+@{
+    ViewBag.Title = "Browse";
+}
+
+<h2>Browsing Genre: @Model.Name</h2>
+
+    @*Old way to display each album for this Genre in a list*@
+    @*foreach (var album in Model.Albums)
+    {
+        <li>@album.Title</li>
+    }*@
+<ul>
+    @*2 Using html.ActionLink() HTML Helpers to create links to album details page(recommended way)*@
+    @foreach (var album in Model.Albums)
+    {
+        //Action Link (with album title, calling details actionMethod and instantiation of a new album object for each Id. 
+        <li>@Html.ActionLink(album.Title, "Details", new { id = album.AlbumId })</li>
+    }
+</ul>
+
