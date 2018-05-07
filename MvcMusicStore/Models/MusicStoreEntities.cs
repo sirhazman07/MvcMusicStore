@@ -15,5 +15,6 @@ namespace MvcMusicStore.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
+        public System.Data.Entity.DbSet<MvcMusicStore.ViewModels.ShoppingCartViewModel> ShoppingCartViewModels { get; set; }
     }
 }
