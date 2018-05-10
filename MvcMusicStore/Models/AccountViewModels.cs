@@ -48,6 +48,11 @@ namespace MvcMusicStore.Models
 
     public class LoginViewModel
     {
+        //Added UserName prop for user Login - Remove Later
+        [Required]
+        [Display(Name ="Username")]
+        public string UserName { get; set; }
+
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
@@ -64,6 +69,11 @@ namespace MvcMusicStore.Models
 
     public class RegisterViewModel
     {
+        //Added UserName property for user register
+        [Required]
+        [Display(Name ="Username")]
+        public string UserName { get; set; }
+        
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

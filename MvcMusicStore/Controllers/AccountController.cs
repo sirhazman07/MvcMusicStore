@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MvcMusicStore.Models;
+using System.Web.Security;
 
 namespace MvcMusicStore.Controllers
 {
@@ -70,6 +71,10 @@ namespace MvcMusicStore.Controllers
         {
             if (!ModelState.IsValid)
             {
+                //Migrate Shopping user's Cart after user has logged into the system
+                MigrateShoppingCart(model.UserName);
+                FormsAuthentication.SetAuthCookie(model.UserName, false /*
+                    createPersistentCookie */);
                 return View(model);
             }
 
@@ -151,6 +156,16 @@ namespace MvcMusicStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Attempt to register the user
+                MembershipCreateStatus createStatus;
+                Membership.CreateUser(model.UserName,
+                    model.Password, model.Email,
+                    "question", "answer", true, out createStatus);
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+                    MigrateShoppingCart(model.Email);
+                }
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -421,6 +436,15 @@ namespace MvcMusicStore.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        private void MigrateShoppingCart(string UserName)
+        {
+            //Associate shopping cart items with logged-in user
+            var cart = ShoppingCart.GetCart(this.HttpContext);
+
+            cart.MigrateCart(UserName);
+            Session[ShoppingCart.CartSessionKey] = UserName;
         }
 
         #region Helpers
