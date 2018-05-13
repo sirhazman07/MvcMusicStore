@@ -49,9 +49,9 @@ namespace MvcMusicStore.Models
     public class LoginViewModel
     {
         //Added UserName prop for user Login - Remove Later
-        [Required]
-        [Display(Name ="Username")]
-        public string UserName { get; set; }
+        //[Required]
+        //[Display(Name ="Username")]
+        //public string UserName { get; set; }
 
         [Required]
         [Display(Name = "Email")]
@@ -70,6 +70,7 @@ namespace MvcMusicStore.Models
     public class RegisterViewModel
     {
         //Added UserName property for user register
+        //TODO: ADD ANNOTATION TO CHECK USERNAME IS UNIQUE/NOT ALREADY ON THE SYSTEM
         [Required]
         [Display(Name ="Username")]
         public string UserName { get; set; }

@@ -72,8 +72,8 @@ namespace MvcMusicStore.Controllers
             if (!ModelState.IsValid)
             {
                 //Migrate Shopping user's Cart after user has logged into the system
-                MigrateShoppingCart(model.UserName);
-                FormsAuthentication.SetAuthCookie(model.UserName, false /*
+                MigrateShoppingCart(model.Email);
+                FormsAuthentication.SetAuthCookie(model.Email, false /*
                     createPersistentCookie */);
                 return View(model);
             }
@@ -166,7 +166,7 @@ namespace MvcMusicStore.Controllers
                     MigrateShoppingCart(model.Email);
                 }
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -186,7 +186,7 @@ namespace MvcMusicStore.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+                
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -438,13 +438,13 @@ namespace MvcMusicStore.Controllers
             base.Dispose(disposing);
         }
 
-        private void MigrateShoppingCart(string UserName)
+        private void MigrateShoppingCart(string Email)
         {
             //Associate shopping cart items with logged-in user
             var cart = ShoppingCart.GetCart(this.HttpContext);
 
-            cart.MigrateCart(UserName);
-            Session[ShoppingCart.CartSessionKey] = UserName;
+            cart.MigrateCart(Email);
+            Session[ShoppingCart.CartSessionKey] = Email;
         }
 
         #region Helpers

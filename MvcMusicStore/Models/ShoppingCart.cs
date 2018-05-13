@@ -181,13 +181,14 @@ namespace MvcMusicStore.Models
 
         // When a user has logged in, migrate their shopping cart to
         // be associated withtheir username
-        public void MigrateCart(string username)
+        // changed username to email
+        public void MigrateCart(string email)
         {
             var shoppingCart = storeDB.Carts.Where(c => c.CartId == ShoppingCartId);
 
             foreach (Cart item in shoppingCart)
             {
-                item.CartId = username;
+                item.CartId = email;
             }
             storeDB.SaveChanges();
         }
