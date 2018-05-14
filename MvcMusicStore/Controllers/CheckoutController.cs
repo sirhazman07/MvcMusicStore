@@ -59,7 +59,7 @@ namespace MvcMusicStore.Controllers
         }
 
         //
-        // GET: /Checkout/AddressAndPayment
+        // GET: /Checkout/Complete
         [HttpGet]
         public ActionResult Complete(int id)
         {

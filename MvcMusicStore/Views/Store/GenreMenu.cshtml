@@ -1,0 +1,13 @@
+﻿@model IEnumerable<MvcMusicStore.Models.Genre>
+
+<ul id="categories">
+    @*Dynamically Create Action Links with every Genre Name 
+        using Name as the Parameter e.g Store/Browse/Jazz *@
+    @foreach (var genre in Model)
+    {
+        <li>@Html.ActionLink(genre.Name,
+           "Browse", "Store",
+           new { Genre = genre.Name }, null)</li>
+    }
+</ul>
+

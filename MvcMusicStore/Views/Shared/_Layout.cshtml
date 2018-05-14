@@ -12,16 +12,25 @@
         <div id="header">
             <h1>ASP.NET MVC MUSIC STORE</h1>
             <ul id="navlist">
+                @*ADD NAV ICONS*@
                 <li class="first"><a href="/" id="current">Home</a></li>
                 <li><a href="/Store/">Store</a></li>
+                <li>@{Html.RenderAction("CartSummary", "ShoppingCart");}</li>
+                <li><a href="/StoreManager/">Admin</a></li>
             </ul>
         </div>
-
-        @RenderBody()
         
-        <footer>
+    @*Render our Genre Side Menu List Partial View*@
+        @{Html.RenderAction("GenreMenu", "Store"); }
+
+        <div id="main">
+            @RenderBody()
+        </div>
+        
+        @*Changed from <footer> tag for css class*@
+        <div id="footer">
             <p>&copy; @DateTime.Now.Year - Built using ASP.NET</p>
-        </footer>
+        </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

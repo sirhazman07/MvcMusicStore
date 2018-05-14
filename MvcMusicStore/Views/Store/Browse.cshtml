@@ -1,22 +1,39 @@
 ﻿@model MvcMusicStore.Models.Genre
 
 @{
-    ViewBag.Title = "Browse";
+    ViewBag.Title = "Browse Albums";
 }
 
-<h2>Browsing Genre: @Model.Name</h2>
+@*<h2>Browsing Genre: @Model.Name</h2>*@
 
-    @*Old way to display each album for this Genre in a list*@
-    @*foreach (var album in Model.Albums)
+@*Old way to display each album for this Genre in a list*@
+@*foreach (var album in Model.Albums)
     {
         <li>@album.Title</li>
     }*@
-<ul>
+
+<div class="genre">
+    <h3><em>@Model.Name</em> Albums</h3>
+
     @*2 Using html.ActionLink() HTML Helpers to create links to album details page(recommended way)*@
-    @foreach (var album in Model.Albums)
-    {
-        //Action Link (with album title, calling details actionMethod and instantiation of a new album object for each Id. 
-        <li>@Html.ActionLink(album.Title, "Details", new { id = album.AlbumId })</li>
-    }
-</ul>
+    <ul id="album-list">
+        @foreach (var album in Model.Albums)
+        //NEW - Same as above but using Url.Action() so we can apply special formatting to the links
+        //To include the album artwork
+        {
+            <li>
+                <a href="@Url.Action("Details", new { id = album.AlbumId })">
+                    <img alt="@album.Title" src="@album.AlbumArtUrl" />
+                    <span>@album.Title</span>
+                </a>
+            </li>
+
+            //OLD Action Link (with album title, calling details actionMethod and instantiation of a new album object for each Id.
+            @*<li>
+                @Html.ActionLink(album.Title, "Details", new { id = album.AlbumId })
+                </li>*@
+
+        }
+    </ul>
+</div>
 
