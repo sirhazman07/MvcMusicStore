@@ -54,11 +54,15 @@ ul li a
     /*width: 750px;*/
 }
 
-ul
-{
-	list-style-type: square;
-	margin-left: 25px;
-	font-size: 14px;
+.genre-browse-list {
+    display: flex;
+    flex-direction: row;
+}
+
+ul {
+    list-style-type: square;
+    margin-left: 25px;
+    font-size: 14px;
 }
 
 ul#album-list

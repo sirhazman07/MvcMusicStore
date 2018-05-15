@@ -59,9 +59,11 @@ namespace MvcMusicStore.Models
 
         [Required(ErrorMessage = "Email Address is required")]
         [DisplayName("Email Address")]
-        [RegularExpression(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.
-        [\w!#$%&'*+\-/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,4})
-        |(([0-9]{1,3}\.){3}[0-9]{1,3}))$", ErrorMessage = "Email Address is not valid")]
+        
+        //Removed expression as not working properly - left dataType email
+        //[RegularExpression(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.
+        //[\w!#$%&'*+\-/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,4})
+        //|(([0-9]{1,3}\.){3}[0-9]{1,3}))$", ErrorMessage = "Email Address is not valid")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 

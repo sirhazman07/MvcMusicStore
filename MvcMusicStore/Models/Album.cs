@@ -36,6 +36,8 @@ namespace MvcMusicStore.Models
         //Added Virtual Property to Allow EF to Lazy-load Genre and Artist as Necessary
         public virtual Genre Genre { get; set; }
         public virtual Artist Artist { get; set; }
+        //Added Nav Property so EF Knows the're Associated
+        public virtual List<OrderDetail> OrderDetails { get; set; }
 
     }
 }
