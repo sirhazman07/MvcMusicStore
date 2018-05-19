@@ -1,0 +1,72 @@
+﻿@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "ASP.NET MVC Music Store Insights Dashboard";
+}
+
+<div id="Active Promotions"></div>
+
+<div id="promotion">
+</div>
+
+<h3><em>Manager's</em> Dashboard</h3>
+
+<div id="main" class="col-sm-12 col-md-12 col-lg-12">
+
+    @*//ADD 2 ROWs*@
+    <div class="row">
+        <div id="widgetConatiner" class="col-sm-12 col-md-4 col-lg-4">
+            <div class="row">
+                <h3></h3>
+            </div>
+            <div class="row">
+                @(Html.Kendo().Chart<MvcMusicStore.Models.Album>()
+                .Name("Top Selling Albums")
+                .Title("Top Selling Albums (GWh)")
+                .Legend(legend => legend
+                    .Position(ChartLegendPosition.Top)
+                )
+                .DataSource(ds => ds.Read(read => read.Action("GetTopSellingAlbums", "Home", 5)))
+                .Series(series =>
+                {
+                    series.Column(model => model.Title).Name("Nuclear").CategoryField("Year");
+                    //series.Column(model => model.Hydro).Name("Hydro").CategoryField("Year");
+                    //series.Column(model => model.Wind).Name("Wind").CategoryField("Year");
+                })
+                .CategoryAxis(axis => axis
+                    .Labels(labels => labels.Rotation(-90))
+                    .MajorGridLines(lines => lines.Visible(false))
+                )
+                .ValueAxis(axis => axis.Numeric()
+                    .Labels(labels => labels.Format("{0:N0}"))
+                    .MajorUnit(10000)
+                    .Line(line => line.Visible(false))
+                )
+                .Tooltip(tooltip => tooltip
+                    .Visible(true)
+                    .Format("{0:N0}")
+                )
+                )
+            </div>
+
+        </div>
+        <div id="widgetConatiner" class="col-sm-12 col-md-4 col-lg-4">
+
+        </div>
+        <div id="widgetConatiner" class="col-sm-12 col-md-4 col-lg-4">
+
+        </div>
+    </div>
+    <div class="row">
+        <div id="widgetConatiner" class="col-sm-12 col-md-4 col-lg-4">
+
+        </div>
+        <div id="widgetConatiner" class="col-sm-12 col-md-4 col-lg-4">
+
+        </div>
+        <div id="widgetConatiner" class="col-sm-12 col-md-4 col-lg-4">
+
+        </div>
+    </div>
+
+
+</div>

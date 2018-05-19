@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,6 +16,8 @@ namespace MvcMusicStore.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        //Dependency Injection - Contructor Injection of a new StoreDB based on Music Store Etities shown below
+        MusicStoreEntities storeDB = new MusicStoreEntities();
 
         public ManageController()
         {
@@ -32,9 +35,9 @@ namespace MvcMusicStore.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -333,7 +336,47 @@ namespace MvcMusicStore.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        //
+        // GET: /Manage/Dashboard
+        public ActionResult Dashboard()
+        {
+            ViewBag.message = "Product Dashboard";
+
+            var userId = User.Identity.GetUserId();
+
+            return View("Dashboard");
+
+        }
+
+
+        [ChildActionOnly]
+        private List<Album> GetTopSellingAlbums(int bestSellingAlbums)
+        {
+            //Group the order details by album and return
+            //the albums with the highest count
+
+            var bestSellingAlbum = storeDB.Albums
+                .OrderByDescending(a => a.OrderDetails.Count())
+                .Take(bestSellingAlbums)
+                .ToList();
+            return bestSellingAlbum;
+
+        }
+
+        [ChildActionOnly]
+        private List<Genre> GetLeastSellingGenres(int leastSellingGenres)
+        {
+            //var bestSellingGenre
+            var leastSoldGenres = storeDB.Genres
+                .OrderBy(a => a.Albums.Count())
+                .Take(leastSellingGenres)
+                .ToList();
+
+            return leastSoldGenres;
+
+        }
+
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +427,6 @@ namespace MvcMusicStore.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }
